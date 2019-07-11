@@ -1,7 +1,9 @@
 require 'stuck'
 
 RSpec.describe Stuck do
-  it "should exist" do
-    expect(described_class.new).not_to be_nil
+  subject(:game) { described_class.new }
+
+  it "rolls dice" do
+    expect(game.roll).to be > 0
   end
 end
