@@ -1,0 +1,3 @@
+class Stuck
+
+end
