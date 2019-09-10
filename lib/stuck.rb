@@ -4,7 +4,10 @@ class Stuck
   end
 
   def roll(dice = Array.new(5))
-    dice.map{ rng.rand(1..6) }
+    dice
+      .map{ rng.rand(1..6) }
+      .reject{|i| i == 2 }
+      .reject{|i| i == 5 }
   end
 
   private

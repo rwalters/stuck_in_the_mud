@@ -12,7 +12,9 @@ RSpec.describe Stuck do
   end
 
   subject(:game) { described_class.new(rng) }
-  let(:rng) { nil }
+  let(:rng) { FakeRand.new(ary) }
+  let(:ary) { [1,1,1,1,1] }
+
 
   it "rolls dice" do
     expect(game.roll).to be_an Array
@@ -22,11 +24,14 @@ RSpec.describe Stuck do
     expect(game.roll([1,2,3]).count).to eq(3)
   end
 
-  context "when passed an RNG" do
-    let(:rng) { FakeRand.new }
+  it "returns the expected roll" do
+    expect(game.roll).to eq([1,1,1,1,1])
+  end
 
-    it "returns the expected roll" do
-      expect(game.roll).to eq([1,2,3,4,5])
+  context "when 2's and 5's are rolled" do
+    let(:ary) { [1,2,3,4,5] }
+    it "excludes 2's and 5's" do
+      expect(game.roll).to eq([1,3,4])
     end
   end
 end
