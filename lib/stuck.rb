@@ -1,5 +1,5 @@
 class Stuck
-  def roll(dice = 5)
-    Array.new(dice){ rand(1..6) }
+  def roll(dice = Array.new(5))
+    dice.map{ rand(1..6) }
   end
 end
