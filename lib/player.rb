@@ -1,16 +1,21 @@
+require 'dice'
+
 class Player
-  def initialize(rng = nil)
-    @rng = rng || Random.new
+  attr_reader :dice, :rounds
+
+  def initialize(dice_class = Dice)
+    @dice = dice_class.new
+    @rounds = []
   end
 
-  def roll(dice = Array.new(5))
-    dice
-      .map{ rng.rand(1..6) }
-      .reject{|i| i == 2 }
-      .reject{|i| i == 5 }
+  def current_score
+    rounds.flatten.sum
   end
 
-  private
+  def roll
+    @dice = dice.roll
+    @rounds << dice.valid_dice
 
-  attr_reader :rng
+    dice.valid_dice.sum
+  end
 end

@@ -5,13 +5,14 @@ class Dice
 
   attr_reader :dice
 
-  def initialize(num_dice, rng = nil)
+  def initialize(num_dice = 5, rng = nil)
     @rng = rng || Random.new
     @dice = Array.new(num_dice)
   end
 
   def roll
     @dice = valid_dice.map{ rng.rand(1..6) }
+
     self
   end
 
