@@ -3,8 +3,8 @@ require 'player'
 class Stuck
   attr_reader :players
 
-  def initialize(num_players = 6)
-    @players = Array.new(num_players){ Player.new }
+  def initialize(player_names)
+    @players = player_names.map{|name| Player.new(name: name) }
   end
 
   def play

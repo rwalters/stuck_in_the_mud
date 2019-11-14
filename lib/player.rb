@@ -1,10 +1,12 @@
+require 'securerandom'
 require 'dice'
 
 class Player
-  attr_reader :dice, :rounds
+  attr_reader :dice, :rounds, :name
 
-  def initialize(dice_class = Dice)
-    @dice = dice_class.new
+  def initialize(name: SecureRandom.base64(9), dice: Dice.new)
+    @name = name
+    @dice = dice
     @rounds = []
   end
 

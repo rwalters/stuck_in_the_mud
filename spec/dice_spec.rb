@@ -1,16 +1,7 @@
 require 'dice'
+require 'support/fake_rand'
 
 RSpec.describe Dice do
-  class FakeRand
-    def initialize(ary = nil)
-      @ary = ([] + (ary || (1..99).to_a))
-    end
-
-    def rand(*args)
-      @ary.shift
-    end
-  end
-
   subject(:dice) { roll.dice }
 
   let(:roll) { described_class.roll(num_dice, rng) }
