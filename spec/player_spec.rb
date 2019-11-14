@@ -46,5 +46,21 @@ RSpec.describe Player do
         it { is_expected.to eq(valid_total) }
       end
     end
+
+    describe "#stuck?" do
+      subject(:stuck) { player.stuck? }
+
+      let(:player) { described_class.new(dice: fake_dice) }
+
+      it { is_expected.to be false }
+
+      context "after rolling" do
+        before { player.roll }
+
+        let(:ary) { [2,2,2,5,5] }
+
+        it { is_expected.to be true }
+      end
+    end
   end
 end

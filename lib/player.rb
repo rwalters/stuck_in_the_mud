@@ -20,4 +20,8 @@ class Player
 
     dice.valid_dice.sum
   end
+
+  def stuck?
+    dice.valid_dice.count == 0
+  end
 end
