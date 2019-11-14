@@ -21,7 +21,11 @@ class Player
     dice.valid_dice.sum
   end
 
+  def dice_left
+    dice.valid_dice.count
+  end
+
   def stuck?
-    dice.valid_dice.count == 0
+    dice_left == 0
   end
 end

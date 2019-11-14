@@ -2,7 +2,9 @@ require 'player'
 require 'support/fake_rand'
 
 RSpec.describe Player do
-  subject(:player) { described_class.new }
+  subject { player }
+
+  let(:player) { described_class.new }
 
   it "rolls dice" do
     expect(player.roll).to be_an Integer
@@ -19,7 +21,7 @@ RSpec.describe Player do
   end
 
   context "with Dice" do
-    subject(:player) { described_class.new(dice: fake_dice) }
+    let(:player) { described_class.new(dice: fake_dice) }
 
     let(:fake_dice) { Dice.new(5, rng) }
     let(:rng)       { FakeRand.new(ary) }
@@ -33,8 +35,6 @@ RSpec.describe Player do
     describe "#current_score" do
       subject(:current_score) { player.current_score }
 
-      let(:player) { described_class.new(dice: fake_dice) }
-
       context "before rolling" do
         it { is_expected.to eq(0) }
       end
@@ -45,16 +45,44 @@ RSpec.describe Player do
 
         it { is_expected.to eq(valid_total) }
       end
+
+      (3..7).each do |iter|
+        context "after rolling multiple times" do
+          before do
+            iter.times { player.roll }
+          end
+
+          let(:valid_total) { ary.sum }
+          let(:valid_vals)  { [1,3,4,6] }
+          let(:val_proc)    { ->{ valid_vals.sample } }
+          let(:ary_size)    { iter * 5 }
+          let(:ary)         { Array.new(ary_size){ val_proc.call } }
+
+          it { is_expected.to eq(valid_total) }
+        end
+      end
+    end
+
+    describe "#dice_left" do
+      before { player.roll }
+
+      subject(:dice_left) { player.dice_left }
+
+      it { is_expected.to eq 3 }
+
+      context "after rolling all 2's and 5's" do
+        let(:ary) { [2,2,2,5,5] }
+
+        it { is_expected.to eq 0 }
+      end
     end
 
     describe "#stuck?" do
       subject(:stuck) { player.stuck? }
 
-      let(:player) { described_class.new(dice: fake_dice) }
-
       it { is_expected.to be false }
 
-      context "after rolling" do
+      context "after rolling all 2's and 5's" do
         before { player.roll }
 
         let(:ary) { [2,2,2,5,5] }

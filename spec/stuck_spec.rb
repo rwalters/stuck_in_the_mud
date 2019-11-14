@@ -24,7 +24,7 @@ RSpec.describe Stuck do
     context "one player has no dice left" do
       before do
         loop do
-          break if game.players.any?{|pl| pl.dice.valid_dice.count == 0 }
+          break if game.players.any?{|pl| pl.dice_left == 0 }
 
           game.players.each do |player|
             player.roll
@@ -38,7 +38,7 @@ RSpec.describe Stuck do
     context "no player has dice left" do
       before do
         loop do
-          break if game.players.all?{|pl| pl.dice.valid_dice.count == 0 }
+          break if game.players.all?{|pl| pl.dice_left == 0 }
 
           game.players.each do |player|
             player.roll
