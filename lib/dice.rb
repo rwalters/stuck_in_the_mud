@@ -10,6 +10,10 @@ class Dice
     @dice = Array.new(num_dice)
   end
 
+  def to_s
+    dice
+  end
+
   def roll
     @dice = valid_dice.map{ rng.rand(1..6) }
 
