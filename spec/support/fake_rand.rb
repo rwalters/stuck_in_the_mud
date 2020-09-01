@@ -4,7 +4,9 @@ class FakeRand
   end
 
   def rand(*args)
-    @ary.shift
+    t = @ary.shift
+    @ary.push(t)
+    t
   end
 end
 
