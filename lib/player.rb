@@ -4,7 +4,7 @@ require 'dice'
 class Player
   attr_reader :dice, :rounds, :name
 
-  def initialize(name: SecureRandom.base64(9), dice: Dice.new)
+  def initialize(name: SecureRandom.hex(6), dice: Dice.new)
     @name = name
     @dice = dice
     @rounds = []
